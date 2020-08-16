@@ -13,7 +13,7 @@ from . forms import ProfileForm, PostForm
 def index(request):
     date =dt.date.today()
     posts = Post.objects.all()
-    return render(request, 'projects/index.html', {"date":date, "posts":posts })
+    return render(request, 'awards/index.html', {"date":date, "posts":posts })
 
 @login_required(login_url='/accounts/login/?next=/')
 def profile(request):
@@ -26,7 +26,7 @@ def profile(request):
     profile = Profile.objects.filter(user=current_user).first()
     posts = request.user.post_set.all()
 
-    return render(request, 'projects/profile.html', locals())
+    return render(request, 'awards/profile.html', locals())
 
 @login_required(login_url='/accounts/login/?next=/')
 def updateprofile(request):
