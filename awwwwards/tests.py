@@ -1,50 +1,70 @@
 from django.test import TestCase
-from .models import Profile,Post,User
+from .models import *
 
-# Create your tests here.
 
-class ProfileTestClass(TestCase):
-    #Set up method
-
+class TestProfile(TestCase):
     def setUp(self):
-        self.new_user = User(username='Titus', email='titusouko@gmail.com', password='1234')
-        self.new_user.save()
-        self.new_profile = Profile(user=self.new_user,profile_picture="image.jpeg",bio="just testing", contact='titusouko@gmail.com')
-    
-    # Testing  instance
-    def test_instance(self):
-        self.assertTrue(isinstance(self.new_profile,Profile))
-    
-    def test_save_method(self):
-        self.new_profile.save_profile()
-        profile = Profile.objects.all()
-        self.assertTrue(len(profile)>0)
-
-    def test_delete_method(self):
-        self.new_profile.save_profile()
-        self.new_profile.delete_profile()
-        profile = Profile.objects.all()
-        self.assertTrue(len(profile)==0)   
-class PostTestClass(TestCase):
-
-    def setUp(self):
-        
-        self.new_user = User(username='Titus', email='titusouko@gmail.com', password='1234')
-        self.new_user.save()
-        self.new_post=Post(title="techs",image='image.png',description="test app stuff",user=self.new_user,link="https://w3resource.com",country="kenya")
+        self.user = User(id=1, username='charles', password='wer2345uyq')
+        self.user.save()
 
     def test_instance(self):
-        self.assertTrue(isinstance(self.new_post,Post))    
+        self.assertTrue(isinstance(self.user, User))
+
+    def test_save_user(self):
+        self.user.save()
+
+    def test_delete_user(self):
+        self.user.delete()
+
+
+class PostTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create(id=1, username='charles')
+        self.post = Post.objects.create(id=1, title='test post', photo='https://ucarecdn.com/0ccf61ff-508e-46c6-b713-db51daa6626e', description='desc',
+                                        user=self.user, url='http://ur.coml')
+
+    def test_instance(self):
+        self.assertTrue(isinstance(self.post, Post))
 
     def test_save_post(self):
-        self.new_post.save_post()
+        self.post.save_post()
         post = Post.objects.all()
-        self.assertTrue(len(post)>0)
+        self.assertTrue(len(post) > 0)
+
+    def test_get_posts(self):
+        self.post.save()
+        posts = Post.all_posts()
+        self.assertTrue(len(posts) > 0)
+
+    def test_search_post(self):
+        self.post.save()
+        post = Post.search_project('test')
+        self.assertTrue(len(post) > 0)
 
     def test_delete_post(self):
-        self.new_post.save_post()
-        self.new_post.delete_post()
-        post = Post.objects.all()
-        self.assertTrue(len(post)==0)
+        self.post.delete_post()
+        post = Post.search_project('test')
+        self.assertTrue(len(post) < 1)
+
+
+class RatingTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create(id=1, username='charles')
+        self.post = Post.objects.create(id=1, title='test post', photo='https://ucarecdn.com/0ccf61ff-508e-46c6-b713-db51daa6626e', description='desc',
+                                        user=self.user, url='http://ur.coml')
+        self.rating = Rating.objects.create(id=1, design=6, usability=7, content=9, user=self.user, post=self.post)
+
+    def test_instance(self):
+        self.assertTrue(isinstance(self.rating, Rating))
+
+    def test_save_rating(self):
+        self.rating.save_rating()
+        rating = Rating.objects.all()
+        self.assertTrue(len(rating) > 0)
+
+    def test_get_post_rating(self, id):
+        self.rating.save()
+        rating = Rating.get_ratings(post_id=id)
+        self.assertTrue(len(rating) == 1)
 
     
