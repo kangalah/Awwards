@@ -1,36 +1,30 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from pyuploadcare.dj.models import ImageField
 import datetime as dt
-from django.db.models import Q
 
-# Create your models here.
+
 class Profile(models.Model):
-    user= models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_picture =models.ImageField(upload_to= 'profiles/', blank=True, default="profiles/a.jpg")
-    bio = models.CharField(max_length=100, default='Welcome to your bio')
-    contact = models.CharField(max_length=80)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    profile_picture = models.ImageField(upload_to='images/', default='default.png')
+    bio = models.TextField(max_length=500, default="My Bio", blank=True)
+    name = models.CharField(blank=True, max_length=120)
+    location = models.CharField(max_length=60, blank=True)
+    contact = models.EmailField(max_length=100, blank=True)
 
     def __str__(self):
-        return self.bio
+        return f'{self.user.username} Profile'
 
-    def save_profile(self):
-        self.save()
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
 
-    def delete_profile(self):
-        self.delete()
-
-    @classmethod
-    def update_bio(cls,id, bio):
-        update_profile = cls.objects.filter(id = id).update(bio = bio)
-        return update_profile
-
-    @classmethod
-    def get_all_profiles(cls):
-        profile = Profile.objects.all()
-        return profile
-    @classmethod
-    def search_user(cls,user):
-        return cls.objects.filter(user__username__icontains=user).all()
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()
 
 class Post(models.Model):
     title = models.CharField(max_length=50)
