@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'star_ratings',
     'bootstrap3',
+    'pyuploadcare.dj',
     'rest_framework.authtoken',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,6 +44,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+UPLOADCARE = {
+    'pub_key': '2b709bca64245dd9e55e',
+    'secret': '0a60851de5f3db2dc728',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
