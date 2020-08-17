@@ -10,6 +10,7 @@ import datetime as dt
 from . forms import ProfileForm, PostForm
 
 
+
 def index(request):
     date =dt.date.today()
     posts = Post.objects.all()
