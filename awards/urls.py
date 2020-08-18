@@ -13,15 +13,29 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
+from django.conf.urls import url,include
 from django.contrib import admin
+from django.conf.urls.static import static
 from django.contrib.auth import views
+from rest_framework import routers
+from awwwwards import views as view
+from awwwwards.views import ProfileViewSet,PostViewSet
 from rest_framework.authtoken.views import obtain_auth_token
+
+
+
+
+router = routers.DefaultRouter()
+router.register(r'profiles',view.ProfileViewSet)
+router.register(r'posts', view.PostViewSet)
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'', include('awwwwards.urls')),
-    url(r'^accounts/', include('registration.backends.simple.urls')),
+    url(r'^api/',include(router.urls)),
+    url(r'',include('awwwwards.urls')),
+    url(r'^accounts/',include('registration.backends.simple.urls')),
+    url(r'^logout/$',views.logout, {"next_page":'/'},name="logout"),
     url(r'^api-token-auth/', obtain_auth_token),
-    url(r'^ratings/', include('star_ratings.urls', namespace='ratings', )),
+    
 ]

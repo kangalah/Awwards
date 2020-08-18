@@ -1,21 +1,21 @@
-from django.urls import path, include
+from django.conf.urls import url
+from django.conf.urls.static import static
 from . import views
-from rest_framework import routers
+from django.conf import settings
 
-router = routers.DefaultRouter()
-router.register('users', views.UserViewSet)
-router.register('posts', views.PostViewSet)
-router.register('profile', views.ProfileViewSet)
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('signup/', views.signup, name='signup'),
-    path('account/', include('django.contrib.auth.urls')),
-    path('api/', include(router.urls)),
-    path('<username>/profile', views.user_profile, name='userprofile'),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('profile/<username>/', views.profile, name='profile'),
-    path('profile/<username>/settings', views.edit_profile, name='edit'),
-    path('project/<post>', views.project, name='project'),
-    path('search/', views.search_project, name='search'),
+    url(r'^$',views.index,name='index'),
+    url(r'^create/profile$',views.create_profile, name='create-profile'),
+    url(r'^new/project$',views.new_project, name='new-project'),
+    url(r'^directory/',views.directory, name='directory'),
+    url(r'^profile/',views.profile, name='profile'),
+    url(r'^user/(?P<username>\w{0,50})',views.user_profile,name='user-profile'),
+    url(r'^site/(\d+)',views.site,name='site'),
+    url(r'^search/',views.search_results, name='search_results'),
+    
+
 ]
+
+if settings.DEBUG:
+    urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
