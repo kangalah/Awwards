@@ -35,7 +35,7 @@ urlpatterns = [
     url(r'^api/',include(router.urls)),
     url(r'',include('awwwwards.urls')),
     url(r'^accounts/',include('registration.backends.simple.urls')),
-    url(r'^logout/$',views.logout, {"next_page":'/'},name="logout"),
+    # url(r'^logout/$',views.logout, {"next_page":'/'},name="logout"),
     url(r'^api-token-auth/', obtain_auth_token),
     
 ]
