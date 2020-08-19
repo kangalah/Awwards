@@ -39,7 +39,7 @@
           <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item text-center" href="/user/{{profile.user.username}}">Profile</a>
             <hr>
-            <a href="/logout" class="text-secondary text-center dropdown-item">Log Out</a>
+            <a href="{% url 'logout' %}" class="text-secondary text-center dropdown-item">Log Out</a>
 
           </div>
         </li>

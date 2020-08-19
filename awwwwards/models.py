@@ -43,6 +43,7 @@ class Post(models.Model):
     technologies = models.ManyToManyField('Technologies', max_length=255)
     username = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
     date = models.DateTimeField(auto_now_add=True, blank=True)
+    country = models.CharField(max_length=50, null=True)
 
     def __str__(self):
         return self.title
