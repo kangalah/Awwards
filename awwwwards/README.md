@@ -1,4 +1,4 @@
-# Awwwwards
+
 # By Joan Nanjala.
 
 Live site: View Site
