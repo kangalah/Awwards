@@ -7,16 +7,17 @@ Live site: View Site
 This project allows users to post their projects for other users to rate according to design, usability, creativity and content.
 
 # User Story
-A user can view posted projects and their details.
-A user can post a project to be rated/reviewed.
-A user can rate/ review other users' projects.
-Search for projects.
-View projects overall score.
-A user can view their profile page.
-Setup and Installation
+* A user can view posted projects and their details.
+* A user can post a project to be rated/reviewed.
+* A user can rate/ review other users' projects.
+* Search for projects.
+* View projects overall score.
+* A user can view their profile page.
+
+# Setup and Installation
 To get the project :
 
-# Clone the repository:
+* Clone the repository:
 * https://github.com/kangalah/Awwards
 Install and activate Virtual
 - python3 -m venv virtual - source virtual/bin/activate  
