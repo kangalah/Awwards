@@ -1,7 +1,7 @@
 # Awwards
 # By Joan Nanjala.
 
-Live site: View Site
+Live site: View Site https://awwards40.herokuapp.com/
 
 # Description
 This project allows users to post their projects for other users to rate according to design, usability, creativity and content.
