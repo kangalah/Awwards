@@ -49,6 +49,7 @@ python manage.py runserver
 
 # Known Bugs
 * When submitting a vote, the user has to click on post button twice or refresh the page for the change in average votes to be detected. I am working on still fixing this bug.
+
 # Contact Information
 * If you have any question or contributions, please email me at nyongesajoannanjala@gmail.com
 
